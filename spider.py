@@ -12,6 +12,8 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'
 }
 
+keyword = '风景'
+
 # 具体获取页面内容
 def get_html(url):
     try:
@@ -20,7 +22,7 @@ def get_html(url):
         if response.status_code == 200:
             return response.text
         if response.status_code == 302:
-            pass
+            print('302')
     except ConnectionError:
         return get_html(url)
 
@@ -36,7 +38,12 @@ def get_index(keyword, page):
     # 拼接url
     url = base_url + queries
     html = get_html(url)
-    print(html)
+    return html
+
+def main():
+    for page in range(1, 101):
+        html = get_index(keyword, page)
+        print(html)
 
 if __name__ == '__main__':
-    get_index('风景', 1)
+    main()
